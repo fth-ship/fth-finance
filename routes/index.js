@@ -4,11 +4,18 @@ var finance = require('./finance');
 root.setup = function ( app ) {
     app.namespace('/api', function () {
         app.namespace('/finance', function () {
-            app.namespace('/earning', function () {
-                app.post('/', finance.earning.create);    
-                app.put('/:id', finance.earning.update);
-                app.get('/:id', finance.earning.read);
-                app.del('/:id', finance.earning.del);
+            app.namespace('/earnings', function () {
+                app.post('/', finance.earnings.create);    
+                app.put('/:id', finance.earnings.update);
+                app.get('/:id', finance.earnings.read);
+                app.del('/:id', finance.earnings.del);
+            });
+
+            app.namespace('/spending', function () {
+                app.post('/', finance.spending.create);    
+                app.put('/:id', finance.spending.update);
+                app.get('/:id', finance.spending.read);
+                app.del('/:id', finance.spending.del);
             });
         }); 
     });    

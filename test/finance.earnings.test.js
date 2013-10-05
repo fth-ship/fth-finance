@@ -21,7 +21,7 @@ describe('Finance', function () {
                 should.not.exist( e );
                 res.status.should.be.eql( 200 );
                 res.body.id.should.have.lengthOf( 24 );
-                res.body.message.should.include('Earning was added!');
+                res.body.message.should.include('earnings was added!');
                 res.body.status.should.be.ok;
 
                 earningID = res.body.id;
@@ -29,7 +29,7 @@ describe('Finance', function () {
             }
 
             agent
-                .post( url.resolve( target, '/api/finance/earning' ) )
+                .post( url.resolve( target, '/api/finance/earnings' ) )
                 .send( earning )
                 .end( requestHandler );
         });    
@@ -43,7 +43,7 @@ describe('Finance', function () {
             function requestHandler ( e, res ) {
                 should.not.exist( e );
                 res.status.should.be.eql( 200 );
-                res.body.message.should.include('Earning was updated!');
+                res.body.message.should.include('earnings was updated!');
                 res.body.status.should.be.ok;
 
                 done(); 
@@ -53,7 +53,7 @@ describe('Finance', function () {
                 .put( 
                     url.resolve( 
                         target, 
-                        ( '/api/finance/earning/' + 
+                        ( '/api/finance/earnings/' + 
                           earningID )
                     ) 
                 )
@@ -66,7 +66,7 @@ describe('Finance', function () {
                 should.not.exist( e );
                 res.status.should.be.eql( 200 );
                 should.exist( res.body.result );
-                res.body.message.should.include('Earning was readed!');
+                res.body.message.should.include('earnings was readed!');
                 res.body.status.should.be.ok;
 
                 done(); 
@@ -76,7 +76,7 @@ describe('Finance', function () {
                 .get( 
                     url.resolve( 
                         target, 
-                        ( '/api/finance/earning/' + 
+                        ( '/api/finance/earnings/' + 
                           earningID )
                     ) 
                 )
@@ -88,7 +88,7 @@ describe('Finance', function () {
             function requestHandler ( e, res ) {
                 should.not.exist( e );
                 res.status.should.be.eql( 200 );
-                res.body.message.should.include('Earning was removed!');
+                res.body.message.should.include('earnings was removed!');
                 res.body.status.should.be.ok;
 
                 done(); 
@@ -98,7 +98,7 @@ describe('Finance', function () {
                 .del( 
                     url.resolve( 
                         target, 
-                        ( '/api/finance/earning/' + 
+                        ( '/api/finance/earnings/' + 
                           earningID )
                     ) 
                 )
