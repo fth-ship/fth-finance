@@ -17,6 +17,12 @@ root.setup = function ( app ) {
                 app.get('/:id', finance.spending.read);
                 app.del('/:id', finance.spending.del);
             });
+
+            app.namespace('/analysis', function () {
+                app.namespace('/spending', function () {
+                    app.get('/overall', finance.analysis.spendingOverall);    
+                });
+            });
         }); 
     });    
 };
