@@ -1,0 +1,18 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.3.8",
+    "jade": "*",
+    "mongo": "~0.1.0",
+    "mongoose": "~3.6.20",
+    "superagent": "~0.15.4",
+    "chai": "~1.8.0",
+    "express-namespace": "~0.1.1",
+    "should": "~1.3.0"
+  }
+}
