@@ -1,8 +1,10 @@
+var root = this;
+var finance = require('./finance');
 
-/*
- * GET home page.
- */
-
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+root.setup = function ( app ) {
+    app.namespace('/api', function () {
+        app.namespace('/finance', function () {
+            app.post('/earning', finance.earning);
+        }); 
+    });    
 };
