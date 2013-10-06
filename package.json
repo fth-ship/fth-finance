@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": false,
   "license": "BSD",
-  "author": "Kaique da Silva <kaique.developer@gmail.com>"
+  "author": "Kaique da Silva <kaique.developer@gmail.com>",
   "scripts": {
     "start": "node app.js"
   },

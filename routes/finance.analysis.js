@@ -1,5 +1,5 @@
 var root = this;
-var earnings = require('../models/spending');
+var earnings = require('../models/earnings');
 var spending = require('../models/spending');
 
 root.analysis = {};
@@ -11,11 +11,12 @@ root.analysis.spendingOverall = function ( req, res ) {
     var query = {};
     var Earnings = earnings.Model;
     var Spending = spending.Model;
-    var totalSpending = out.result.totalSpending = 0; 
+    var earningsTotal = 0; 
+    var spendingsTotal = 0;
 
     function successHandler ( result ) {
         code = 200;
-        if ( result ) out.id = result['_id'];
+        out.result.totalSpending = result;
         out.message.push('overall was rendered!');
         out.status = true;
         res.send( code, out );
@@ -30,11 +31,10 @@ root.analysis.spendingOverall = function ( req, res ) {
 
     function spendingHandler ( err, result ) {
         if ( !err && result ) {
-            var spendingsResult = 0;
             result.map(function (item) {
-                spendingsResult += item.value; 
+                spendingsTotal += item.value; 
             });
-            successHandler();
+            successHandler( ( earningsTotal - spendingsTotal ) );
         } else {
             failHandler( err );    
         }
@@ -43,7 +43,7 @@ root.analysis.spendingOverall = function ( req, res ) {
     function earningsHandler ( err, result ) {
         if ( !err && result ) {
             result.map(function ( item ) {
-                totalSpending += item.value;
+                earningsTotal += item.value;
             });
             Spending.find( query, spendingHandler );
         } else {

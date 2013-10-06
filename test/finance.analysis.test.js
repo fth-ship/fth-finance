@@ -3,24 +3,24 @@ var superagent = require('superagent');
 var should = require('should');
 var url = require('url');
 var ch = require('charlatan');
+var exec = require('child_process').exec;
 
 app.listen( 3000 );
 
 describe('Finance', function () {
     var target = 'http://localhost:3000';
     var agent = superagent.agent(); 
-    var earnings = {
-        title: ch.Name.title(),
-        value: ch.numerify('####') 
-    };
-    var spending = {
-        title: ch.Name.title(),
-        value: ch.numerify('####') 
-    };
-    var totalSpending = ( earnings.value - spending.value );
+    var earnings = null; 
+    var spendings = null; 
+    var totalSpending = null;
 
     describe('analysis', function () {
         it('earnings', function ( done ) {
+            earnings = {
+                title: ch.Name.title(),
+                value: ch.numerify('####') 
+            };
+
             function requestHandler ( e, res ) {
                 should.not.exist( e );
                 res.status.should.be.eql( 200 );
@@ -38,6 +38,11 @@ describe('Finance', function () {
         });
 
         it('spending', function ( done ) {
+            spendings = {
+                title: ch.Name.title(),
+                value: ch.numerify('####') 
+            };
+
             function requestHandler ( e, res ) {
                 should.not.exist( e );
                 res.status.should.be.eql( 200 );
@@ -50,11 +55,13 @@ describe('Finance', function () {
 
             agent
                 .post( url.resolve( target, '/api/finance/spending' ) )
-                .send( spending )
+                .send( spendings )
                 .end( requestHandler );
         });
 
         it('speding overall', function ( done ) {
+            totalSpending = ( earnings.value - spendings.value );
+
             function requestHandler ( e, res ) {
                 should.not.exist( e );
                 res.status.should.be.eql( 200 );
@@ -73,8 +80,24 @@ describe('Finance', function () {
                         ( '/api/finance/analysis/spending/overall' )
                     ) 
                 )
-                .send( spending )
                 .end( requestHandler );
         });
+    });
+
+    after(function (done) {
+        var command = [
+            'mongo', 'finance_development',
+            '--eval', '"db.dropDatabase();"'
+        ].join(' ');
+        var mongoDropDatabase = null;
+
+        function execHandler ( err, stdout, stderr ) {
+            if ( err ) throw err;
+            if ( stdout ) console.log( stdout );
+            if ( stderr ) console.log( stderr );
+            done();
+        }
+
+        mongoDropDatabase = exec( command, execHandler );
     });
 });
