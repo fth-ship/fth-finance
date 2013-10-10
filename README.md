@@ -7,6 +7,10 @@ You have the permission to hack this and improve.
 
 ## Installation
 
+## Demo
+
+   (Commands)[http://showterm.io/dae3c72c27d3dec8d95d7]
+
 ### Fork and clone the project
 
 ### Install hard dependencies
